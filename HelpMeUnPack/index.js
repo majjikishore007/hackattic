@@ -1,4 +1,29 @@
 import fetch from 'node-fetch';
-fetch("https://hackattic.com/challenges/help_me_unpack/problem?access_token=ab17bddaef9e90e4")
-  .then((response) => response.json())
-  .then(data=>{console.log(data)})
+import {API_KEY} from './config.js';
+import {decodeData, makeData} from './utils.js';
+
+const BaseUrl = `https://hackattic.com/challenges/help_me_unpack`;
+
+const fetchData = async () => {
+  const response = await fetch(`${BaseUrl}/problem?access_token=${API_KEY}`);
+  const data = await response.json();
+  return data;
+};
+const sendData = async (message) => {
+  console.log(message);
+  const response = await fetch(`${BaseUrl}/solve?access_token=${API_KEY}`, {
+    method: 'POST',
+    Headers: {
+      'Accept': 'application.json',
+      'Content-Type': 'application/json',
+    },
+    Body: message,
+  });
+  console.log(response);
+};
+const main = async () => {
+  const data = await fetchData();
+  const message = makeData(decodeData(data.bytes));
+  sendData(message);
+};
+main();
