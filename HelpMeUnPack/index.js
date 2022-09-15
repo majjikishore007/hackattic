@@ -9,21 +9,23 @@ const fetchData = async () => {
   const data = await response.json();
   return data;
 };
+
 const sendData = async (message) => {
-  console.log(message);
   const response = await fetch(`${BaseUrl}/solve?access_token=${API_KEY}`, {
     method: 'POST',
     Headers: {
       'Accept': 'application.json',
       'Content-Type': 'application/json',
     },
-    Body: message,
+    body: JSON.stringify(message),
   });
-  console.log(response);
+  const res = await response.text();
+  return res;
 };
 const main = async () => {
   const data = await fetchData();
-  const message = makeData(decodeData(data.bytes));
-  sendData(message);
+  const message =makeData(decodeData(data.bytes));
+  const response=await sendData(message);
+  console.log(response);
 };
 main();
