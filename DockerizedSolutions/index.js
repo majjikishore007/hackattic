@@ -39,6 +39,7 @@ const main = async () => {
   credentials: { user: 'gentle-smoke@hackattic.com', password: 'CPNMNY9C4H' },
   ignition_key: 'OA8ZFIQMTJCUTFVHGPJFBIX5MUCK',
   trigger_token: '27e055b3.653a.448d.92ac.f4c623451d5b'
+  CPNMNY9C4H
 }
      */
   push();
