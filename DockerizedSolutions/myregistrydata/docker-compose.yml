@@ -1,70 +1,15 @@
 version: '3'
+
 services:
-#Registry
   registry:
     image: registry:2
-    restart: always
     ports:
     - "5000:5000"
     environment:
       REGISTRY_AUTH: htpasswd
-      REGISTRY_AUTH_HTPASSWD_REALM: Registry-Realm
-      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.passwd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
-      - myregistrydata:/data
       - ./auth:/auth
-    networks:
-      - mynet
-#Nginx Service
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - web-root:/var/www/html
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./nginx/ssl/:/etc/nginx/ssl/
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - dhparam:/etc/ssl/certs
-    networks:
-      - mynet
-#certbot service 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email majjikishore031@gmail.com --agree-tos --no-eff-email --force-renewal -d registry.shitpost.tech  -d www.registry.shitpost.tech
-#Docker Networks
-networks:
-  mynet:
-    driver: bridge
-
-#Volumes
-volumes:
-  certbot-etc:
-  certbot-var:
-  myregistrydata:
-    driver: local
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/azureuser/hackattic/DockerizedSolutions/myregistrydata
-      o: bind
-  dhparam:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/azureuser/hackattic/DockerizedSolutions/myregistrydata/dhparam/
-      o: bind 
+      - ./data:/data
