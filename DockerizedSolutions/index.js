@@ -18,7 +18,7 @@ const push = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        registry_host: 'localhost:5000/v2',
+        registry_host: '',
       }),
     }
   ).then((response) => {
@@ -40,8 +40,19 @@ const main = async () => {
   ignition_key: 'OA8ZFIQMTJCUTFVHGPJFBIX5MUCK',
   trigger_token: '27e055b3.653a.448d.92ac.f4c623451d5b'
   CPNMNY9C4H
+
+
+  {
+credentials: {
+user: "purple-pond@hackattic.com",
+password: "WGP2XLWP8I"
+},
+ignition_key: "LEGK30MO1DALIU6WCHQXKQU96GWH",
+trigger_token: "d2b87dfb.bf59.4df3.afdd.fce268ddab87"
+}
 }
      */
+
   push();
 };
 
